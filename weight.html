@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Weight Loss Planner</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Bootstrap 5 CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+    crossorigin="anonymous"
+  />
+
+  <!-- Chart.js for graphs -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"
+    integrity="sha384-pvD5u1bYISbqVbKp2zM/MIiRMC2Y0F7bEG6VDdr5l6kxb1XhZ5CX6blf7mIXk83n"
+    crossorigin="anonymous"
+  ></script>
+
+  <style>
+    body {
+      background-color: #0f172a;
+      color: #e5e7eb;
+    }
+    .card {
+      background-color: #020617;
+      border-color: #1f2937;
+    }
+    label {
+      font-weight: 500;
+    }
+    .form-text {
+      color: #9ca3af;
+    }
+    .text-muted {
+      color: #9ca3af !important;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="index.html">MySite</a>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#mainNavbar"
+      aria-controls="mainNavbar"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="mainNavbar">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="weight.html">Weight Loss</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="projects.html">Projects</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="contact.html">Contact</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main class="container py-4">
+  <h1 class="mb-3">Weight Loss Planner</h1>
+  <p class="text-muted">
+    This tool estimates calories, projected weight change, and protein targets using the Mifflin–St Jeor equation and common protein guidelines for fat loss. Always discuss plans with a health professional if you have medical conditions.[web:72][web:75][web:79][web:61][web:64][web:70]
+  </p>
+
+  <div class="row g-4">
+    <!-- Inputs -->
+    <div class="col-lg-4">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title mb-3">Inputs</h5>
+
+          <div class="mb-3">
+            <label for="sex" class="form-label">Sex</label>
+            <select id="sex" class="form-select">
+              <option value="female">Female</option>
+              <option value="male">Male</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="age" class="form-label">Age (years)</label>
+            <input type="number" id="age" class="form-control" value="35" min="14" max="90" />
+          </div>
+
+          <div class="mb-3">
+            <label for="height" class="form-label">Height (cm)</label>
+            <input type="number" id="height" class="form-control" value="170" min="130" max="220" />
+          </div>
+
+          <div class="mb-3">
+            <label for="weight" class="form-label">Current weight (kg)</label>
+            <input type="number" id="weight" class="form-control" value="75" min="30" max="250" />
+          </div>
+
+          <div class="mb-3">
+            <label for="targetWeight" class="form-label">Target weight (kg)</label>
+            <input type="number" id="targetWeight" class="form-control" value="70" min="30" max="250" />
+            <div class="form-text">
+              Used to shape the 6‑month projection. The calculator does not force you to reach this exactly.
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="activity" class="form-label">Activity level</label>
+            <select id="activity" class="form-select">
+              <option value="1.2">Sedentary (little or no exercise)</option>
+              <option value="1.375">Lightly active (1–3 days/week)</option>
+              <option value="1.55" selected>Moderately active (3–5 days/week)</option>
+              <option value="1.725">Very active (6–7 days/week)</option>
+              <option value="1.9">Extra active (physical job + training)</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="deficit" class="form-label">Daily calorie deficit (kcal)</label>
+            <input type="number" id="deficit" class="form-control" value="500" min="0" max="1500" step="50" />
+            <div class="form-text">
+              A deficit of 500–750 kcal/day is often used for gradual weight loss, but higher deficits may not be sustainable.[web:79]
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="proteinPerKg" class="form-label">Protein target (g/kg)</label>
+            <input type="number" id="proteinPerKg" class="form-control" value="1.8" min="1.2" max="3" step="0.1" />
+            <div class="form-text">
+              1.6–2.2 g/kg is commonly recommended for fat loss with muscle preservation.[web:61][web:64][web:70]
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="days" class="form-label">Projection window (days)</label>
+            <input type="number" id="days" class="form-control" value="30" min="7" max="90" />
+            <div class="form-text">
+              Used for the short‑term calorie and weight projection.
+            </div>
+          </div>
+
+          <button id="calculateBtn" class="btn btn-primary w-100">Calculate plan</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Monthly summary -->
+    <div class="col-lg-4">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title mb-3">30‑day plan</h5>
+
+          <p class="mb-1"><strong>BMR</strong>: <span id="bmrText">–</span> kcal/day</p>
+          <p class="mb-1"><strong>Maintenance (TDEE)</strong>: <span id="tdeeText">–</span> kcal/day</p>
+          <p class="mb-1"><strong>Daily calorie target</strong>: <span id="calTargetText">–</span> kcal/day</p>
+          <p class="mb-3 text-muted" id="deficitNote">
+            Deficit note appears here.
+          </p>
+
+          <p class="mb-1"><strong>Estimated weight change</strong> (next <span id="daysLabel">30</span> days):</p>
+          <ul class="mb-3">
+            <li>
+              Projected weight: <span id="projectedWeightText">–</span> kg
+            </li>
+            <li>
+              Change vs. today: <span id="weightChangeText">–</span> kg
+            </li>
+          </ul>
+
+          <p class="mb-1"><strong>Daily protein target</strong>:</p>
+          <ul class="mb-0">
+            <li>
+              Per kg setting: <span id="proteinPerKgText">–</span> g/kg
+            </li>
+            <li>
+              Total protein: <span id="proteinTotalText">–</span> g/day
+            </li>
+          </ul>
+        </
